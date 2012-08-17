@@ -42,14 +42,14 @@ Shader "GLSL shader with single texture" {
          		gl_Normal   * fbm(crd + offs_w) * amp;
             src.xyz = src.xyz + disp;
 
-            vec3 offs_du = Tangent.xyz * 0.01;
+            vec3 offs_du = Tangent.xyz * 0.0001;
 
             vec3 du = offs_du / 1.0 +
                Tangent.xyz * fbm(crd + offs_u + offs_du) * amp +
                binormal    * fbm(crd + offs_v + offs_du) * amp +
                gl_Normal   * fbm(crd + offs_w + offs_du) * amp - disp;
 
-            vec3 offs_dv = binormal * 0.01;
+            vec3 offs_dv = binormal * 0.0001;
 
             vec3 dv = offs_dv / 1.0 +
                Tangent.xyz * fbm(crd + offs_u + offs_dv) * amp +
