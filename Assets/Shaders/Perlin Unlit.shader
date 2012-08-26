@@ -1,12 +1,17 @@
 Shader "Custom/Perlin Unlit" {
    Properties {
-      _MainTex ("Texture Image", 2D) = "white" {} 
+      _Color ("Color", Color) = (1, 1, 1, 1)
    }
    SubShader {
+      Tags {"Queue" = "Transparent"}
       Pass {    
+         Cull Off
+         ZWrite Off
+         Blend SrcAlpha OneMinusSrcAlpha
+
          GLSLPROGRAM
  
-         uniform sampler2D _MainTex;
+         uniform vec4 _Color;
          uniform vec4 _Time;
          varying vec4 textureCoordinates; 
 
@@ -53,7 +58,7 @@ Shader "Custom/Perlin Unlit" {
          #ifdef FRAGMENT
  
          void main() {
-            gl_FragColor = texture2D(_MainTex, vec2(textureCoordinates));
+            gl_FragColor = _Color;
          }
  
          #endif
