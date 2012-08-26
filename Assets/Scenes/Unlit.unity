@@ -83,6 +83,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 158817880}
   - 114: {fileID: 158817881}
+  - 114: {fileID: 158817884}
   - 33: {fileID: 158817882}
   - 23: {fileID: 158817883}
   m_Layer: 0
@@ -113,9 +114,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 602868f9d891d4b78895e35c670f1c0e, type: 3}
   m_Name: 
-  sectionsU: 32
-  sectionsV: 64
-  radius: .100000001
+  sectionsU: 80
+  sectionsV: 150
+  radius: .300000012
   length: 2
   meshType: 0
   rebuild: 0
@@ -144,6 +145,18 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+--- !u!114 &158817884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 158817879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c64c6d40ec8541feb23637107a3d167, type: 3}
+  m_Name: 
+  base: {x: 0, y: 10, z: 20}
+  speed: {x: .100000001, y: 0, z: .0700000003}
 --- !u!1 &549445302
 GameObject:
   m_ObjectHideFlags: 0

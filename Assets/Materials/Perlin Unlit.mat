@@ -24,3 +24,27 @@ Material:
         first:
           name: _Color
         second: {r: .18795906, g: .185341924, b: .23880595, a: .360784322}
+      data:
+        first:
+          name: _Offs
+        second: {r: 0, g: 10, b: 20, a: 0}
+      data:
+        first:
+          name: _Freq
+        second: {r: 1, g: 1, b: 1, a: 0}
+      data:
+        first:
+          name: _Amp
+        second: {r: 1, g: 1, b: 1, a: 0}
+      data:
+        first:
+          name: _OffsU
+        second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _OffsV
+        second: {r: 0, g: 0, b: 10, a: 0}
+      data:
+        first:
+          name: _OffsW
+        second: {r: 0, g: 0, b: 20, a: 0}

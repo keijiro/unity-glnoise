@@ -1,6 +1,11 @@
 Shader "Custom/Perlin Unlit" {
    Properties {
       _Color ("Color", Color) = (1, 1, 1, 1)
+      _Freq ("Frequency", Vector) = (1, 1, 1, 0)
+      _Amp ("Amplifier", Vector) = (1, 1, 1, 0)
+      _OffsU ("Offset U", Vector) = (0, 0, 0, 0)
+      _OffsV ("Offset V", Vector) = (0, 0, 10, 0)
+      _OffsW ("Offset W", Vector) = (0, 0, 20, 0)
    }
    SubShader {
       Tags {"Queue" = "Transparent"}
@@ -12,8 +17,11 @@ Shader "Custom/Perlin Unlit" {
          GLSLPROGRAM
  
          uniform vec4 _Color;
-         uniform vec4 _Time;
-         varying vec4 textureCoordinates; 
+         uniform vec3 _Freq;
+         uniform vec3 _OffsU;
+         uniform vec3 _OffsV;
+         uniform vec3 _OffsW;
+         uniform vec3 _Amp;
 
          #ifdef VERTEX
 
@@ -30,26 +38,16 @@ Shader "Custom/Perlin Unlit" {
          }
 
          vec4 modify_vertex(vec4 src) {
-            float amp = 0.6;
-         	vec3 crd = src.xyz * 1.0;
-         	
-            vec3 offs_u = vec3(0.0, 0.0, _Time.x);
-            vec3 offs_v = vec3(0.0, 0.0, _Time.x + 10.0);
-            vec3 offs_w = vec3(0.0, 0.0, _Time.x + 20.0);
-
+         	vec3 crd = src.xyz * _Freq;
          	vec3 binormal = cross(gl_Normal, Tangent.xyz) * Tangent.w;
-
-            vec3 disp = 
-         		Tangent.xyz * fbm(crd + offs_u) * amp +
-         		binormal    * fbm(crd + offs_v) * amp +
-         		gl_Normal   * fbm(crd + offs_w) * amp;
-            src.xyz = src.xyz + disp;
-         	
+            src.xyz = src.xyz +
+               Tangent.xyz * fbm(crd + _OffsU) * _Amp.x +
+               binormal    * fbm(crd + _OffsV) * _Amp.y +
+               gl_Normal   * fbm(crd + _OffsW) * _Amp.z;
             return src;
          }
  
          void main() {
-            textureCoordinates = gl_MultiTexCoord0;
             gl_Position = gl_ModelViewProjectionMatrix * modify_vertex(gl_Vertex);
          }
  
