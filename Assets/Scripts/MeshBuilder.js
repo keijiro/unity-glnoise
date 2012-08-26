@@ -12,26 +12,27 @@ function Awake() {
 	var normals = new Vector3[ures * vres];
 	var tangents = new Vector4[ures * vres];
 
-	var index = 0;
+	var tangent = Vector4(1.0, 0.0, 0.0, 1.0);
 
+	var i = 0;
 	var x = -0.5 * length;
-	for (var ui = 0; ui < ures; ui++) {
-		var phi = Mathf.PI * 2.0 * ui / ures;
+	for (var u = 0; u < ures; u++) {
+		var phi = Mathf.PI * 2.0 * u / ures;
 		var normal = Vector3(0.0, Mathf.Sin(phi), Mathf.Cos(phi));
-		vertices[index] = normal * radius + Vector3(x, 0, 0);
-		normals[index] = normal;
-		tangents[index] = Vector4(1.0, 0.0, 0.0, 0.0);
-		index++;
+		vertices[i] = normal * radius + Vector3(x, 0, 0);
+		normals[i] = normal;
+		tangents[i] = tangent;
+		i++;
 	}
 
 	x = 0.0;
-	for (var vi = 1; vi < vres; vi++) {
+	for (var v = 1; v < vres; v++) {
 		x += length / (vres - 1);
-		for (ui = 0; ui < ures; ui++) {
-			vertices[index] = vertices[ui] + Vector3(x, 0.0, 0.0);
-			normals[index] = normals[ui];
-			tangents[index] = Vector4(1.0, 0.0, 0.0, 0.0);
-			index++;
+		for (u = 0; u < ures; u++) {
+			vertices[i] = vertices[u] + Vector3(x, 0.0, 0.0);
+			normals[i] = normals[u];
+			tangents[i] = tangent;
+			i++;
 		}
 	}
 
@@ -40,27 +41,27 @@ function Awake() {
     mesh.tangents = tangents;
     mesh.RecalculateBounds();
 
-	var indices = new int[(ures + 1) * vres + vres * (ures - 1)];
+	var indices = new int[(ures + 1) * vres + (vres - 1) * (2 * ures + 1)];
 	var pointer = 0;
-	index = 0;
+	i = 0;
 
-	for (vi = 0; vi < vres; vi++) {
-		for (ui = 0; ui < ures; ui++) {
-			indices[index++] = pointer++;
+	for (v = 0; v < vres; v++) {
+		for (u = 0; u < ures; u++) {
+			indices[i++] = pointer++;
 		}
-		indices[index++] = pointer - ures;
+		indices[i++] = pointer - ures;
 	}
 
-	pointer += 1 - ures;
-	var pointerAdd = -ures;
+	pointer -= ures;
 
-	for (ui = 1; ui < ures; ui++) {
-		for (vi = 0; vi < vres; vi++) {
-			indices[index++] = pointer;
-			pointer += pointerAdd;
+	for (v = 0; v < vres - 1; v++) {
+		for (u = 0; u < ures; u++) {
+			indices[i++] = pointer;
+			indices[i++] = pointer - ures;
+			pointer++;
 		}
-		pointerAdd *= -1;
-		pointer += 1 + pointerAdd;
+		indices[i++] = pointer - ures;
+		pointer -= ures * 2;
 	}
 
     mesh.SetIndices(indices, MeshTopology.LineStrip, 0);
