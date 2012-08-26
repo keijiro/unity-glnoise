@@ -41,7 +41,7 @@ function Awake() {
     mesh.tangents = tangents;
     mesh.RecalculateBounds();
 
-	var indices = new int[(ures + 1) * vres + (vres - 1) * (2 * ures + 1)];
+	var indices = new int[(ures + 1) * vres + (vres - 1) * (2 * ures - 1)];
 	var pointer = 0;
 	i = 0;
 
@@ -55,13 +55,13 @@ function Awake() {
 	pointer -= ures;
 
 	for (v = 0; v < vres - 1; v++) {
-		for (u = 0; u < ures; u++) {
-			indices[i++] = pointer;
-			indices[i++] = pointer - ures;
+		for (u = 0; u < ures - 1; u++) {
+			indices[i++] = pointer - ures + 1;
+			indices[i++] = pointer + 1;
 			pointer++;
 		}
-		indices[i++] = pointer - ures;
-		pointer -= ures * 2;
+		pointer += 1 - ures * 2;
+		indices[i++] = pointer;
 	}
 
     mesh.SetIndices(indices, MeshTopology.LineStrip, 0);
