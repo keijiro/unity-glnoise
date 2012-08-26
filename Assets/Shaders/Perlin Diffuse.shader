@@ -1,4 +1,4 @@
-Shader "GLSL shader with single texture" {
+Shader "Custom/Perlin Diffuse" {
    Properties {
       _MainTex ("Texture Image", 2D) = "white" {} 
    }
@@ -15,7 +15,6 @@ Shader "GLSL shader with single texture" {
 
          attribute vec4 Tangent;
 
-//         #include "noise3D.glslinc"
          #include "classicnoise3D.glslinc"
 
          float fbm(vec3 coord) {
@@ -79,5 +78,4 @@ Shader "GLSL shader with single texture" {
          ENDGLSL
       }
    }
-   // Fallback "Unlit/Texture"
 }
