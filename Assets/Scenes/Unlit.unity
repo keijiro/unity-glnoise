@@ -113,10 +113,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 602868f9d891d4b78895e35c670f1c0e, type: 3}
   m_Name: 
-  ures: 32
-  vres: 64
+  sectionsU: 32
+  sectionsV: 64
   radius: .100000001
   length: 2
+  meshType: 0
+  rebuild: 0
 --- !u!33 &158817882
 MeshFilter:
   m_ObjectHideFlags: 0
