@@ -35,7 +35,9 @@ function BuildMesh() {
 	MakeVertexArray(mesh);
 
     if (meshType == 0) {
-	    mesh.SetIndices(MakeIndexArraySimple(), MeshTopology.LineStrip, 0);
+	    mesh.SetIndices(MakeIndexArrayUStrip(), MeshTopology.LineStrip, 0);
+	} else if (meshType == 1) {
+	    mesh.SetIndices(MakeIndexArrayVStrip(), MeshTopology.LineStrip, 0);
     } else {
 	    mesh.SetIndices(MakeIndexArrayDense(), MeshTopology.LineStrip, 0);
     }
@@ -79,10 +81,27 @@ function MakeVertexArray(mesh : Mesh) {
     mesh.RecalculateBounds();
 }
 
-function MakeIndexArraySimple() {
+function MakeIndexArrayUStrip() {
 	var array = new int [sectionsU * sectionsV];
 	for (var i = 0; i < array.Length; i++) {
 		array[i] = i;
+	}
+	return array;
+}
+
+function MakeIndexArrayVStrip() {
+	var array = new int [sectionsU * sectionsV];
+	var index = 0;
+	var adder = sectionsU;
+	var i = 0;
+
+	for (var u = 0; u < sectionsU; u++) {
+		for (var v = 0; v < sectionsV; v++) {
+			array[i++] = index;
+			index += adder;
+		}
+		adder *= -1;
+		index += adder + 1;
 	}
 	return array;
 }
