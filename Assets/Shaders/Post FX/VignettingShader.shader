@@ -13,12 +13,11 @@ Shader "Post FX/VignettingShader" {
 			GLSLPROGRAM
 
 			uniform sampler2D _MainTex;
-			uniform vec4 _MainTex_TexelSize;
 
 			uniform sampler2D vignetteTex;
-			uniform float intensity;
-			uniform float blur;
-			varying vec2 uv;
+			uniform lowp float intensity;
+			uniform lowp float blur;
+			varying lowp vec2 uv;
 
 			#ifdef VERTEX
 			void main() {
@@ -29,17 +28,14 @@ Shader "Post FX/VignettingShader" {
 
 			#ifdef FRAGMENT
 			void main() {
-				vec2 coords = uv;
+				lowp vec4 color = texture2D(_MainTex, uv);
+				lowp vec4 colorBlur = texture2D(vignetteTex, uv);
 
-				coords = (coords - 0.5) * 2.0;
-				float coordDot = dot(coords, coords);
-				vec4 color = texture2D(_MainTex, uv);
+				vec2 coord = (uv - 0.5) * 2.0;
+				lowp float coord2 = dot(coord, coord);
 
-				float mask = 1.0 - coordDot * intensity * 0.1;
-
-				vec4 colorBlur = texture2D(vignetteTex, uv);
-
-				gl_FragColor = mix(color, colorBlur, min(blur * coordDot, 1.0)) * mask;
+				lowp float mask = 1.0 - coord2 * intensity * 0.1;
+				gl_FragColor = mix(color, colorBlur, min(blur * coord2, 1.0)) * mask;
 			}
 			#endif
 
