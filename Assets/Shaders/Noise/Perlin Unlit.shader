@@ -11,8 +11,10 @@ Shader "Custom/Perlin Unlit" {
       Tags {"Queue" = "Transparent"}
       Pass {    
          Cull Off
+         ZTest Always
          ZWrite Off
          Blend SrcAlpha OneMinusSrcAlpha
+         Fog { Mode off }      
 
          GLSLPROGRAM
  
