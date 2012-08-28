@@ -247,9 +247,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f91d763dd3724764be0ac840141d98d, type: 3}
   m_Name: 
-  intensity: 3.29999995
+  intensity: 4
   blur: .5
-  blurSpread: 1.77999997
+  blurSpread: 2.9000001
   vignetteMaterial: {fileID: 2100000, guid: 6c79c4888bd074ca88c118e2ee5743da, type: 2}
   separableBlurMaterial: {fileID: 2100000, guid: 68ea9b7c7f802408fa2cb10ffd8585b5,
     type: 2}

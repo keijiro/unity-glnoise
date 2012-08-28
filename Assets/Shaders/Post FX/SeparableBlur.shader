@@ -1,6 +1,6 @@
 Shader "Post FX/SeparableBlur" {
 	Properties {
-		_MainTex ("Base (RGB)", 2D) = "" {}
+		_MainTex ("Base", 2D) = "" {}
 	}
 
 	Subshader {

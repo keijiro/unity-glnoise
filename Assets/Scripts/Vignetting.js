@@ -26,9 +26,9 @@ function OnRenderImage(source : RenderTexture, destination : RenderTexture) {
 	separableBlurMaterial.SetVector("offsets", Vector4(blurSpread * oneOverBaseSize / widthOverHeight, 0.0, 0.0, 0.0));
 	Graphics.Blit(secondQuarterRezColor, quarterRezColor, separableBlurMaterial);
 
-	vignetteMaterial.SetFloat("_Intensity", intensity);
-	vignetteMaterial.SetFloat("_Blur", blur);
-	vignetteMaterial.SetTexture("_VignetteTex", quarterRezColor);
+	vignetteMaterial.SetFloat("intensity", intensity);
+	vignetteMaterial.SetFloat("blur", blur);
+	vignetteMaterial.SetTexture("vignetteTex", quarterRezColor);
 	Graphics.Blit(source, destination, vignetteMaterial);
 	
 	RenderTexture.ReleaseTemporary(halfRezColor);			
