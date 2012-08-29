@@ -1,47 +1,54 @@
 #pragma strict
 
-@Range(4, 256)
-var sectionsU = 32;
+@Range(4, 256)		var sectionsU = 32;
+@Range(4, 256)		var sectionsV = 64;
+@Range(0.1, 10.0)	var radius = 1.0;
+@Range(0.1, 10.0)	var length = 5.0;
+@Range(0, 2)		var meshType = 0;
 
-@Range(4, 256)
-var sectionsV = 64;
-
-@Range(0.1, 10.0)
-var radius = 1.0;
-
-@Range(0.1, 10.0)
-var length = 5.0;
-
-@Range(0, 1)
-var meshType = 0;
-
-var rebuild = false;
-
-function Awake() {
-	BuildMesh();
-}
+private var prevSectionsU = 0;
+private var prevSectionsV = 0;
+private var prevRadius = 0.0;
+private var prevLength = 0.0;
+private var prevMeshType = -1;
 
 function Update() {
-	if (rebuild) {
-		BuildMesh();
-		rebuild = false;
-	}
+	if (CheckChanges()) BuildMesh();
 }
 
-function BuildMesh() {
-	var meshFilter = GetComponent.<MeshFilter>();
-	var mesh = meshFilter.mesh ? meshFilter.mesh : Mesh();
+private function CheckChanges() {
+	var modified =
+		sectionsU != prevSectionsU ||
+		sectionsV != prevSectionsV ||
+		prevRadius != radius ||
+		prevLength != length ||
+		prevMeshType != meshType;
 
-	MakeVertexArray(mesh);
+	prevSectionsU = sectionsU;
+	prevSectionsV = sectionsV;
+	prevRadius = radius;
+	prevLength = length;
+	prevMeshType = meshType;
 
+	return modified;
+}
+
+private function BuildMesh() {
     if (meshType == 0) {
-	    mesh.SetIndices(MakeIndexArrayUStrip(), MeshTopology.LineStrip, 0);
+    	var indices = MakeIndexArrayUStrip();
 	} else if (meshType == 1) {
-	    mesh.SetIndices(MakeIndexArrayVStrip(), MeshTopology.LineStrip, 0);
+	    indices = MakeIndexArrayVStrip();
     } else {
-	    mesh.SetIndices(MakeIndexArrayDense(), MeshTopology.LineStrip, 0);
+	    indices = MakeIndexArrayDense();
     }
 
+	var mesh = Mesh();
+	MakeVertexArray(mesh);
+    mesh.SetIndices(indices, MeshTopology.LineStrip, 0);
+    mesh.RecalculateBounds();
+
+	var meshFilter = GetComponent.<MeshFilter>();
+	if (meshFilter.mesh) Destroy(meshFilter.mesh);
     meshFilter.mesh = mesh;
 }
 
@@ -78,7 +85,6 @@ function MakeVertexArray(mesh : Mesh) {
     mesh.vertices = vertices;
     mesh.normals = normals;
     mesh.tangents = tangents;
-    mesh.RecalculateBounds();
 }
 
 function MakeIndexArrayUStrip() {
