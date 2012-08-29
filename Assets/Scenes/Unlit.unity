@@ -118,7 +118,7 @@ MonoBehaviour:
   sectionsV: 150
   radius: .300000012
   length: 2
-  meshType: 1
+  meshType: 0
 --- !u!33 &158817882
 MeshFilter:
   m_ObjectHideFlags: 0
