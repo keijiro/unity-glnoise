@@ -34,17 +34,15 @@ private function CheckChanges() {
 }
 
 private function BuildMesh() {
-    if (meshType == 0) {
-    	var indices = MakeIndexArrayUStrip();
-	} else if (meshType == 1) {
-	    indices = MakeIndexArrayVStrip();
-    } else {
-	    indices = MakeIndexArrayDense();
-    }
-
 	var mesh = Mesh();
-	MakeVertexArray(mesh);
-    mesh.SetIndices(indices, MeshTopology.LineStrip, 0);
+
+	var normals = MakeNormals();
+	mesh.vertices = MakeVertices(normals);
+	mesh.normals = normals;
+	mesh.tangents = MakeTangents();
+
+    mesh.SetIndices(MakeIndexArray(), MeshTopology.LineStrip, 0);
+
     mesh.RecalculateBounds();
 
 	var meshFilter = GetComponent.<MeshFilter>();
@@ -52,42 +50,50 @@ private function BuildMesh() {
     meshFilter.mesh = mesh;
 }
 
-function MakeVertexArray(mesh : Mesh) {
-	var vertices = new Vector3 [sectionsU * sectionsV];
-	var normals = new Vector3 [sectionsU * sectionsV];
+private function MakeTangents() {
+	var tangent = Vector4(1, 0, 0, 1);
 	var tangents = new Vector4 [sectionsU * sectionsV];
+	for (var i = 0; i < tangents.Length; i++) {
+		tangents[i] = tangent;
+	}
+	return tangents;
+}
 
-	var i = 0;
-	var dx = Vector3(-0.5 * length, 0, 0);
+private function MakeNormals() {
+	var normals = new Vector3 [sectionsU * sectionsV];
 	for (var u = 0; u < sectionsU; u++) {
 		var phi = Mathf.PI * 2 * u / sectionsU;
 		var normal = Vector3(0, Mathf.Sin(phi), Mathf.Cos(phi));
-		vertices[i] = normal * radius + dx;
-		normals[i] = normal;
-		i++;
-	}
-
-	dx = Vector3.zero;
-	for (var v = 1; v < sectionsV; v++) {
-		dx += Vector3(length / (sectionsV - 1), 0, 0);
-		for (u = 0; u < sectionsU; u++) {
-			vertices[i] = vertices[u] + dx;
-			normals[i] = normals[u];
-			i++;
+		for (var v = 0; v < sectionsV; v++) {
+			normals[u + v * sectionsU] = normal;
 		}
 	}
-
-	var tangent = Vector4(1, 0, 0, 1);
-	for (i = 0; i < tangents.Length; i++) {
-		tangents[i] = tangent;
-	}
-
-    mesh.vertices = vertices;
-    mesh.normals = normals;
-    mesh.tangents = tangents;
+	return normals;
 }
 
-function MakeIndexArrayUStrip() {
+private function MakeVertices(normals : Vector3[]) {
+	var vertices = new Vector3 [sectionsU * sectionsV];
+	var i = 0;
+	for (var v = 0; v < sectionsV; v++) {
+		var dx = Vector3.right * (length * v / (sectionsV - 1) - 0.5 * length);
+		for (var u = 0; u < sectionsU; u++) {
+			vertices[i++] = normals[u] * radius + dx;
+		}
+	}
+	return vertices;
+} 
+
+private function MakeIndexArray() {
+    if (meshType == 0) {
+    	return MakeIndexArrayUStrip();
+	} else if (meshType == 1) {
+	    return MakeIndexArrayVStrip();
+    } else {
+	    return MakeIndexArrayDense();
+    }
+}
+
+private function MakeIndexArrayUStrip() {
 	var array = new int [sectionsU * sectionsV];
 	for (var i = 0; i < array.Length; i++) {
 		array[i] = i;
@@ -95,7 +101,7 @@ function MakeIndexArrayUStrip() {
 	return array;
 }
 
-function MakeIndexArrayVStrip() {
+private function MakeIndexArrayVStrip() {
 	var array = new int [sectionsU * sectionsV];
 	var index = 0;
 	var adder = sectionsU;
@@ -112,7 +118,7 @@ function MakeIndexArrayVStrip() {
 	return array;
 }
 
-function MakeIndexArrayDense() {
+private function MakeIndexArrayDense() {
 	var array = new int [(sectionsU + 1) * sectionsV + (sectionsV - 1) * (2 * sectionsU - 1)];
 	var index = 0;
 	var i = 0;
