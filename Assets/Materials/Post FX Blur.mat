@@ -6,21 +6,14 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Vignette
-  m_Shader: {fileID: 4800000, guid: c80d38dc253a1400e9d56d28f95a7f91, type: 3}
+  m_Name: Post FX Blur
+  m_Shader: {fileID: 4800000, guid: 964ce41456fd24e97a540d0a1dd84f9b, type: 3}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
       data:
         first:
           name: _MainTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _VignetteTex
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
