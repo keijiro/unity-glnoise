@@ -120,7 +120,7 @@ MonoBehaviour:
   sectionsV: 150
   radius: .300000012
   length: 2
-  meshType: 2
+  meshType: 0
 --- !u!33 &158817882
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -156,8 +156,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c64c6d40ec8541feb23637107a3d167, type: 3}
   m_Name: 
-  base: {x: 0, y: 10, z: 20}
-  speed: {x: .100000001, y: 0, z: .0700000003}
+  speed: .100000001
+  pitch: 57
+  amp: 1
+  vertical: 0
+  freq: 1
 --- !u!114 &158817885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,11 +171,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b8c256e48b8a46b48162836c2fb87e1, type: 3}
   m_Name: 
-  sectionsU: 32
-  sectionsV: 32
+  sectionsU: 64
+  sectionsV: 64
   lengthU: 1
   lengthV: 1
-  meshType: 1
+  meshType: 0
 --- !u!114 &158817886
 MonoBehaviour:
   m_ObjectHideFlags: 0
