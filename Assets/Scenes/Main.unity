@@ -83,6 +83,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 158817880}
   - 114: {fileID: 158817881}
+  - 114: {fileID: 158817885}
   - 114: {fileID: 158817884}
   - 33: {fileID: 158817882}
   - 23: {fileID: 158817883}
@@ -110,7 +111,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 158817879}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 602868f9d891d4b78895e35c670f1c0e, type: 3}
   m_Name: 
@@ -118,7 +119,7 @@ MonoBehaviour:
   sectionsV: 150
   radius: .300000012
   length: 2
-  meshType: 0
+  meshType: 2
 --- !u!33 &158817882
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -156,6 +157,19 @@ MonoBehaviour:
   m_Name: 
   base: {x: 0, y: 10, z: 20}
   speed: {x: .100000001, y: 0, z: .0700000003}
+--- !u!114 &158817885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 158817879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b8c256e48b8a46b48162836c2fb87e1, type: 3}
+  m_Name: 
+  sectionsU: 32
+  sectionsV: 32
+  meshType: 1
 --- !u!1 &549445302
 GameObject:
   m_ObjectHideFlags: 0
