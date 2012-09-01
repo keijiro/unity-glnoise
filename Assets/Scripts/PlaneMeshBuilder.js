@@ -2,7 +2,7 @@
 
 @Range(2, 512)	var sectionsU = 32;
 @Range(2, 512)	var sectionsV = 32;
-@Range(0, 1)	var meshType = 0;
+@Range(0, 2)	var meshType = 0;
 
 private var prevSectionsU = 0;
 private var prevSectionsV = 0;
@@ -74,6 +74,8 @@ private function MakeVertices() {
 private function MakeIndexArray() {
 	if (meshType == 0) {
 		return MakeIndexArrayUStrip();
+	} else if (meshType == 1) {
+		return MakeIndexArrayDiagonal();
 	} else {
 		return MakeIndexArrayDense();
 	}
@@ -93,6 +95,38 @@ private function MakeIndexArrayUStrip() {
 		index += (sectionsU - direction);
 		direction *= -1;
 	}
+	return array;
+}
+
+private function MakeIndexArrayDiagonal() {
+	var array = new int [sectionsU * sectionsV];
+	var offs = 0;
+	var u = 0;
+	var v = 0;
+
+	while (offs < sectionsU * sectionsV - 1) {
+		array[offs++] = v * sectionsU + u;
+		if (u == sectionsU - 1) v++; else u++;
+
+		while (u > 0 && v < sectionsV - 1) {
+			array[offs++] = v * sectionsU + u;
+			u--;
+			v++;
+		}
+
+		if (offs == sectionsU * sectionsV - 1) break;
+
+		array[offs++] = v * sectionsU + u;
+		if (v == sectionsV - 1) u++; else v++;
+
+		while (v > 0 && u < sectionsU - 1) {
+			array[offs++] = v * sectionsU + u;
+			u++;
+			v--;
+		}
+	}
+
+	array[offs] = offs;
 	return array;
 }
 
