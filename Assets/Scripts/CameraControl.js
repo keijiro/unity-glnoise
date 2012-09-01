@@ -18,13 +18,13 @@ function Awake() {
 
 function Update() {
 	if (Input.GetMouseButton(0)) {
-		yaw += 400.0 * Input.GetAxis("Mouse X") * Time.deltaTime;
-		pitch -= 400.0 * Input.GetAxis("Mouse Y") * Time.deltaTime;
+		yaw += 300.0 * Input.GetAxis("Mouse X") * Time.deltaTime;
+		pitch -= 300.0 * Input.GetAxis("Mouse Y") * Time.deltaTime;
 	}
 	distance = Mathf.Max(0.0, distance - 8.0 * Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime);
 
-	yaw_current = ExpEase.Out(yaw_current, yaw, -2.0);
-	pitch_current = ExpEase.Out(pitch_current, pitch, -2.0);
+	yaw_current = ExpEase.Out(yaw_current, yaw, -1.5);
+	pitch_current = ExpEase.Out(pitch_current, pitch, -1.5);
 	distance_current = ExpEase.Out(distance_current, distance, -2.0);
 
 	pivot_yaw.localRotation = Quaternion.AngleAxis(yaw_current, Vector3.up);
