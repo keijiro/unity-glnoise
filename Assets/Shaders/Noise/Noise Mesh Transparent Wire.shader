@@ -46,7 +46,7 @@ Shader "Noise Mesh/Transparent Wire" {
          }
  
          void main() {
-            gl_Position = gl_ProjectionMatrix * modify_vertex(gl_ModelViewMatrix * gl_Vertex);
+            gl_Position = gl_ModelViewProjectionMatrix * modify_vertex(gl_Vertex);
          }
  
          #endif
