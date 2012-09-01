@@ -82,6 +82,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 158817880}
+  - 114: {fileID: 158817886}
   - 114: {fileID: 158817881}
   - 114: {fileID: 158817885}
   - 114: {fileID: 158817884}
@@ -169,7 +170,19 @@ MonoBehaviour:
   m_Name: 
   sectionsU: 32
   sectionsV: 32
+  lengthU: 1
+  lengthV: 1
   meshType: 1
+--- !u!114 &158817886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 158817879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f1cfa16efb124bceacfe537c6cbc0b0, type: 3}
+  m_Name: 
 --- !u!1 &404451197
 GameObject:
   m_ObjectHideFlags: 0
