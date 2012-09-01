@@ -1,11 +1,15 @@
 #pragma strict
 
-@Range(2, 512)	var sectionsU = 32;
-@Range(2, 512)	var sectionsV = 32;
+@Range(2, 256)	var sectionsU = 32;
+@Range(2, 265)	var sectionsV = 32;
+@Range(1, 10)	var lengthU = 1.0;
+@Range(1, 10)	var lengthV = 1.0;
 @Range(0, 2)	var meshType = 0;
 
 private var prevSectionsU = 0;
 private var prevSectionsV = 0;
+private var prevLengthU = 1.0;
+private var prevLengthV = 1.0;
 private var prevMeshType = -1;
 
 function Update() {
@@ -16,10 +20,14 @@ private function CheckChanges() {
 	var modified =
 		sectionsU != prevSectionsU ||
 		sectionsV != prevSectionsV ||
+		lengthU != prevLengthU ||
+		lengthV != prevLengthV ||
 		prevMeshType != meshType;
 
 	prevSectionsU = sectionsU;
 	prevSectionsV = sectionsV;
+	prevLengthU = lengthU;
+	prevLengthV = lengthV;
 	prevMeshType = meshType;
 
 	return modified;
@@ -58,11 +66,11 @@ private function MakeTangents() {
 
 private function MakeVertices() {
 	var vertices = new Vector3 [sectionsU * sectionsV];
-	var dx = 2.0 / (sectionsU - 1);
+	var dx = 2.0 * lengthU / (sectionsU - 1);
 	var i = 0;
 	for (var v = 0; v < sectionsV; v++) {
-		var x = -1.0;
-		var z = -1.0 + 2.0 * v / (sectionsV - 1);
+		var x = -lengthU;
+		var z = lengthV * (2.0 * v / (sectionsV - 1) - 1.0);
 		for (var u = 0; u < sectionsU; u++) {
 			vertices[i++] = Vector3(x, 0, z);
 			x += dx;
